@@ -6,7 +6,7 @@ This is a Note Application built with CodeIgniter 4 and Tailwind CSS.
 
 ### Prerequisites
 - PHP 8.0+
-- MySQL/MariaDB
+- PostgreSQL
 - Composer
 - Node.js & npm
 
@@ -32,10 +32,13 @@ This is a Note Application built with CodeIgniter 4 and Tailwind CSS.
      ```
      database.default.hostname = localhost
      database.default.database = note_app
-     database.default.username = root
-     database.default.password = 
+     database.default.username = postgres
+     database.default.password = your_postgres_password
+     database.default.DBDriver = Postgre
+     database.default.port = 5432
      ```
-   - Create a MySQL database called `note_app`
+   - Create a PostgreSQL database called `note_app`
+   - Update the password to match your PostgreSQL installation
 
 5. **Run migrations**
    ```bash
@@ -166,9 +169,10 @@ note-app/
 ## Troubleshooting
 
 ### Database Connection Error
-- Verify MySQL is running
+- Verify PostgreSQL is running
 - Check `.env` database credentials
 - Ensure `note_app` database exists
+- Make sure PostgreSQL user has proper permissions
 
 ### CSS Not Loading
 - Run `npm run css:build` to compile Tailwind CSS
@@ -184,3 +188,22 @@ note-app/
 - Keep development server running in separate terminal
 - Check browser console for JavaScript errors
 - Use `php spark tinker` for debugging
+
+## PostgreSQL Setup Instructions
+
+1. **Install PostgreSQL** if not already installed
+2. **Start PostgreSQL service**
+3. **Create database**:
+   ```sql
+   CREATE DATABASE note_app;
+   ```
+4. **Create user** (optional but recommended):
+   ```sql
+   CREATE USER note_user WITH PASSWORD 'your_password';
+   GRANT ALL PRIVILEGES ON DATABASE note_app TO note_user;
+   ```
+5. **Update .env** with your credentials
+6. **Run migrations**:
+   ```bash
+   php spark migrate
+   ```

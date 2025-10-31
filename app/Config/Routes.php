@@ -18,6 +18,9 @@ $routes->group('auth', function ($routes) {
 // Dashboard Routes
 $routes->get('dashboard', 'Dashboard::index', ['filter' => 'auth']);
 $routes->post('note/create', 'Dashboard::create', ['filter' => 'auth']);
+$routes->get('note/edit/(:num)', 'Dashboard::edit/$1', ['filter' => 'auth']);
+$routes->post('note/update/(:num)', 'Dashboard::update/$1', ['filter' => 'auth']);
+$routes->get('note/toggle-pin/(:num)', 'Dashboard::togglePin/$1', ['filter' => 'auth']);
 $routes->get('note/delete/(:num)', 'Dashboard::delete/$1', ['filter' => 'auth']);
 
-$routes->get('/', 'Auth::login');
+$routes->get('/', 'Auth::login', ['filter' => 'guest']);
