@@ -1,68 +1,186 @@
-# CodeIgniter 4 Application Starter
+# Note App - Personal Note-Taking Application
 
-## What is CodeIgniter?
+## Overview
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+Note App is a modern, secure web-based note-taking application built with CodeIgniter 4 and Tailwind CSS. It provides users with an intuitive platform to create, manage, organize, and pin their personal notes. The application features user authentication, real-time note management, and a clean, responsive user interface.
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+## Key Features
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+- **User Authentication**: Secure registration and login with password hashing
+- **Note Management**: Create, read, update, and delete personal notes
+- **Pin/Unpin Notes**: Mark important notes by pinning them to the top
+- **Responsive Design**: Beautiful and intuitive UI built with Tailwind CSS
+- **Session-Based Security**: Protected routes and authenticated user sessions
+- **Color-Coded Elements**: Visual hierarchy with blue and indigo color scheme
+- **Modal Forms**: Create and edit notes using modal dialogs
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+## Installation
 
-## Installation & updates
+### Prerequisites
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+- PHP 8.0 or higher (tested with PHP 8.2.12)
+- Composer (PHP dependency manager)
+- PostgreSQL database server
+- Node.js and npm (for Tailwind CSS compilation)
+- Git (optional, for cloning the repository)
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+### Step-by-Step Installation
 
-## Setup
+1. **Navigate to the project directory**:
+   ```bash
+   cd c:\Project\Mini Project\note-app
+   ```
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+2. **Install PHP dependencies**:
+   ```bash
+   composer install
+   ```
 
-## Important Change with index.php
+3. **Install Node.js dependencies**:
+   ```bash
+   npm install
+   ```
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+4. **Configure environment variables**:
+   - Copy the `.env` file or create one based on the example
+   - Update database credentials:
+     ```
+     database.default.hostname=localhost
+     database.default.database=note_app
+     database.default.username=postgres
+     database.default.password=your_password
+     database.default.DBDriver=Postgre
+     ```
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+5. **Create the database**:
+   ```sql
+   CREATE DATABASE note_app;
+   ```
 
-**Please** read the user guide for a better explanation of how CI4 works!
+6. **Run database migrations**:
+   ```bash
+   php spark migrate
+   ```
 
-## Repository Management
+7. **Compile Tailwind CSS**:
+   ```bash
+   npm run build
+   ```
+   
+   For development with watch mode:
+   ```bash
+   npm run dev
+   ```
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+8. **Start the development server**:
+   ```bash
+   php spark serve
+   ```
+   
+   The application will be available at `http://localhost:8080`
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+## Usage
+
+1. Open your browser and navigate to `http://localhost:8080`
+2. Create a new account by clicking the Register button
+3. Login with your email and password
+4. Create, edit, delete, and pin your notes from the dashboard
+5. Click the star icon to pin/unpin important notes
+6. Use the Edit and Delete buttons to manage your notes
+
+## Project Structure
+
+```
+app/
+├── Config/          # Configuration files
+├── Controllers/     # Application controllers (Auth, Dashboard)
+├── Filters/         # Route filters (AuthFilter, GuestFilter)
+├── Models/          # Data models (User, Note)
+├── Views/           # HTML templates
+└── Database/Migrations/  # Database schema migrations
+
+public/
+├── css/             # Compiled CSS files
+├── index.php        # Application entry point
+└── robots.txt
+
+writable/
+├── cache/           # Cache storage
+├── logs/            # Application logs
+├── session/         # Session storage
+└── uploads/         # User uploads
+```
+
+## Technology Stack
+
+- **Backend**: PHP 8.2.12
+- **Framework**: CodeIgniter 4.6.3
+- **Frontend**: Tailwind CSS 4.1.16
+- **Database**: PostgreSQL
+- **Authentication**: Session-based with password hashing
+- **Package Managers**: Composer (PHP) and npm (Node.js)
+
+## Color Scheme
+
+- **Navigation**: Blue background (blue-600) with white text
+- **Note Cards**: White background with blue top border (blue-400)
+- **Section Titles**: Blue text (blue-700)
+- **Modal Headers**: Blue or Indigo background (blue-600, indigo-600)
+- **Buttons**: Blue and Indigo shades (blue-500, indigo-500)
+- **Success Messages**: Green background (green-100)
+- **Error Messages**: Red background (red-100)
+
+## API Routes
+
+### Authentication Routes
+- `GET /auth/login` - Login page
+- `POST /auth/do-login` - Process login
+- `GET /auth/register` - Registration page
+- `POST /auth/do-register` - Process registration
+- `GET /auth/logout` - Logout user
+
+### Dashboard Routes (Authenticated)
+- `GET /dashboard` - View all notes
+- `POST /note/create` - Create a new note
+- `POST /note/update/:id` - Update a note
+- `POST /note/toggle-pin/:id` - Pin/unpin a note
+- `POST /note/delete/:id` - Delete a note
 
 ## Server Requirements
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+PHP version 8.0 or higher is required, with the following extensions installed:
 
 - [intl](http://php.net/manual/en/intl.requirements.php)
 - [mbstring](http://php.net/manual/en/mbstring.installation.php)
+- [pgsql](http://php.net/manual/en/pgsql.installation.php) - Required for PostgreSQL database
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+The following extensions should be enabled:
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+- json (enabled by default)
+- [libcurl](http://php.net/manual/en/curl.requirements.php) for HTTP requests
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+## Troubleshooting
+
+### Database Connection Error
+- Verify PostgreSQL is running
+- Check database credentials in `.env` file
+- Ensure the database exists
+
+### CSS Not Loading
+- Run `npm run build` to compile Tailwind CSS
+- Check that `public/css/output.css` is generated
+
+### Session Issues
+- Ensure `writable/session` directory has proper permissions
+- Clear browser cookies and try again
+
+### Port Already in Use
+- Change the port: `php spark serve --port=8081`
+
+## License
+
+This project is built with CodeIgniter 4. For more information, visit the [CodeIgniter documentation](https://codeigniter.com/user_guide/).
+
+## Support
+
+For issues and feature requests, please refer to the project documentation or the CodeIgniter 4 user guide.
