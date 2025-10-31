@@ -49,21 +49,13 @@ Vagrantfile
 # Temporary Files
 #-------------------------
 writable/cache/*
-!writable/cache/index.html
-
 writable/logs/*
-!writable/logs/index.html
-
 writable/session/*
-!writable/session/index.html
-
 writable/uploads/*
-!writable/uploads/index.html
-
-writable/debugbar/*
-!writable/debugbar/index.html
-
-php_errors.log
+!writable/cache/.htaccess
+!writable/logs/.htaccess
+!writable/session/.htaccess
+!writable/uploads/.htaccess
 
 #-------------------------
 # User Guide Temp Files
@@ -124,3 +116,35 @@ _modules/*
 
 /results/
 /phpunit*.xml
+
+# CodeIgniter
+writable/cache/*
+writable/logs/*
+writable/session/*
+writable/uploads/*
+!writable/cache/.htaccess
+!writable/logs/.htaccess
+!writable/session/.htaccess
+!writable/uploads/.htaccess
+
+# Node
+node_modules/
+package-lock.json
+
+# Environment
+.env
+.env.*.php
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# System
+.DS_Store
+Thumbs.db
+
+# PHP
+vendor/
+composer.lock
